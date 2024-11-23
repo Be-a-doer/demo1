@@ -1,0 +1,59 @@
+---
+title: "206 Project"
+author: "Yifan Wu"
+date: "2024-10-22"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    toc-location: left
+    embed-resources: true
+    code-line-numbers: true
+  pdf:
+    toc: true
+    toc-depth: 3
+    code-line-numbers: true
+    fontsize: 10pt
+fig-cap-location: margin
+editor: visual
+jupyter: julia-1.9
+---
+
+# Singular Value Decomposition (SVD)
+
+## Introduction of SVD
+
+  SVD is a fundamental matrix decomposition technique that decomposes a matrix into the product of three matrices which has a wide range of applications, including dimensionality reduction, matrix inversion, and recommendation systems.
+
+Given a matrix **\(A\)**, SVD decomposes it into the following form:
+$$
+A = U\Sigma V^T
+$$
+**\(U\)** and **\(V\)** are orthogonal matrices. 
+<p>$$
+  \Sigma \text{ is a diagonal matrix.}
+$$</p>
+
+<ul>
+  <li>The column vectors of \(U\) are called the <strong>left singular vectors</strong>.</li>
+  <li>The column vectors of \(V\) are called the <strong>right singular vectors</strong>.</li>
+  <li>The diagonal elements of \(\Sigma\) are called the <strong>singular values</strong>, which are typically arranged in descending order.</li>
+</ul>
+
+In SVD, the singular values represent the significance of the original matrix. Larger singular values correspond to the features represented by the left and right singular vectors that contribute more to the data.
+
+A common application of SVD is in its truncated form. By retaining the larger singular values and their corresponding singular vectors, SVD can achieve dimensionality reduction, extracting the main features of the data.
+
+
+## The Definition of SVD
+
+<div style="text-align: center;">
+  <img src="images/SVD1.png" alt="SVD1" width="600"/>
+</div>
+
+
+
+
+
+
+
