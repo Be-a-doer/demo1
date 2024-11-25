@@ -4,6 +4,7 @@ author: "Yifan Wu"
 date: "2024-10-22"
 format:
   html:
+    css: styles.css
     toc: true
     toc-depth: 3
     toc-location: left
@@ -23,7 +24,7 @@ jupyter: julia-1.9
 
 ## Introduction of SVD
 
-  SVD is a fundamental matrix decomposition technique that decomposes a matrix into the product of three matrices which has a wide range of applications, including dimensionality reduction, matrix inversion, and recommendation systems.
+SVD is a fundamental matrix decomposition technique that decomposes a matrix into the product of three matrices which has a wide range of applications, including dimensionality reduction, matrix inversion, and recommendation systems.
 
 Given a matrix **\(A\)**, SVD decomposes it into the following form:
 $$
@@ -47,12 +48,44 @@ A common application of SVD is in its truncated form. By retaining the larger si
 
 ## The Definition of SVD
 
-<div style="text-align: center;">
+<div style="text-align: center; margin: 20px 0;">
   <img src="images/SVD1.png" alt="SVD1" width="600"/>
 </div>
 
+## Solving the SVD Matrix
+
+So, how can we determine the three matrices $U$, $\Sigma$, and $V$ in the SVD decomposition of a matrix?
+
+If we calculate the transpose of matrix $A$ and multiply it with $A$, we obtain a square matrix $A^T A$ of size $n \times n$. Since $A^T A$ is a square matrix, we can perform eigenvalue decomposition to find its eigenvalues and eigenvectors as shown below:
+
+$$
+(A^T A)v_i = \lambda_i v_i
+$$
+
+Indeed, by performing matrix transposition, $A^T A$ can be expressed as a symmetric matrix. This allows us to solve for all eigenvalues and corresponding eigenvectors. By combining all eigenvectors of $A^T A$ into an $n \times n$ matrix $V$, we can use this as the $V$ matrix in the SVD formula.
+
+If we calculate the transpose of matrix $A$ and multiply $A$ with $A^T$, we obtain another square matrix $A A^T$ of size $m \times m$. Since $A A^T$ is also a square matrix, we can perform eigenvalue decomposition to find its eigenvalues and eigenvectors as shown below:
+
+$$
+(A A^T)u_i = \lambda_i u_i
+$$
+
+Thus, we can obtain the eigenvalues and their corresponding eigenvectors of the $m \times m$ matrix $A A^T$. By combining all the eigenvectors of $A A^T$ into an $m \times m$ matrix, we obtain the $U$ matrix in the SVD formula.
+
+$$
+A A^T = U\Sigma V^T V\Sigma^T U^T = U\Sigma\Sigma^T U^T
+$$
+
+$$
+A^T A = V\Sigma^T U^T U\Sigma V^T = V\Sigma^T\Sigma V^T
+$$
 
 
+Each eigenvector of $A A^T$ corresponds to the left singular vectors of $A$. Once $U$ is determined, the calculation of singular values becomes straightforward. Since $\Sigma$ is a diagonal matrix whose elements are singular values, we only need to compute each eigenvalue to obtain the singular values.
+
+$$
+A = U\Sigma V^T \implies AV = U\Sigma V^T V \implies AV = U\Sigma \implies Av_i = \sigma_i u_i
+$$
 
 
 
