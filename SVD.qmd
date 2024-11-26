@@ -87,6 +87,41 @@ $$
 A = U\Sigma V^T \implies AV = U\Sigma V^T V \implies AV = U\Sigma \implies Av_i = \sigma_i u_i
 $$
 
+## R code for the SVD
+
+```{r}
+# Example matrix A
+A = matrix(c(1, 2, 3, 4, 5, 6), nrow = 3, ncol = 2)
+
+# Step 1: Compute A^T A and A A^T
+ATA = t(A) %*% A   
+AAT = A %*% t(A)   
+
+# Step 2: Compute eigenvalues and eigenvectors
+eig_ATA = eigen(ATA)  
+eig_AAT = eigen(AAT)  
+
+# Step 3: Construct matrix V (right singular vectors)
+V = eig_ATA$vectors
+
+# Step 4: Construct matrix U (left singular vectors)
+U = eig_AAT$vectors
+
+# Step 5: Construct singular value matrix Σ
+singular_values = sqrt(eig_ATA$values)  
+Sigma = diag(singular_values, nrow = nrow(U), ncol = ncol(V))  
+
+# Step 6: Verify decomposition
+A_reconstructed = U %*% Sigma %*% t(V)  
+list(
+  U = U,                   # Left singular vectors
+  Sigma = Sigma,           # Diagonal matrix of singular values
+  V = V,                   # Right singular vectors
+  Reconstructed_A = A_reconstructed  # Matrix reconstructed from U, Σ, and V^T
+)
+
+
+```
 
 
 
