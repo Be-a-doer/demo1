@@ -57,3 +57,71 @@ Obviously, the change in mapping the sample to the black dashed line is much gre
 So we have found the direction of the two principal components.
 
 ## R code for PCA
+```{r}
+# Load necessary libraries
+library(ggplot2)
+library(dplyr)
+library(rgl)
+
+# Load wine dataset
+# This simulates loading the wine dataset similar to sklearn's load_wine function in Python.
+wine_data <- read.csv("https://archive.ics.uci.edu/ml/machine-learning-databases/wine/wine.data", header = FALSE)
+colnames(wine_data) <- c("Class", paste0("Feature", 1:13))
+
+# Subset data for PCA (select rows 1:130 and features 9:11)
+data_raw <- wine_data[1:130, 10:12]
+target_raw <- wine_data[1:130, 1]
+
+# 2.1 Centering the data
+# Calculate the mean for each feature and normalize the data by subtracting the mean
+data_mean <- colMeans(data_raw)
+data_norm <- scale(data_raw, center = data_mean, scale = FALSE)
+
+# 2.2 Compute covariance matrix
+# The covariance matrix is calculated using the normalized data.
+cov_matrix <- cov(data_norm)
+
+# 2.3 Compute eigenvalues and eigenvectors
+# Use eigen decomposition to get eigenvalues and eigenvectors.
+eig <- eigen(cov_matrix)
+eig_values <- eig$values
+eig_vectors <- eig$vectors
+
+# 2.4 Sort eigenvectors by descending eigenvalues
+# Order the indices of eigenvalues in descending order.
+new_index <- order(eig_values, decreasing = TRUE)
+matrix_w <- eig_vectors[, new_index]
+
+# 2.5 Compute contribution rates
+# Compute the proportion of variance explained by each eigenvalue.
+contribution <- eig_values[new_index] / sum(eig_values)
+print(contribution)
+
+# 2.6 Project data onto the new subspace and retain M dimensions
+# For visualization, retain the first two principal components.
+M <- 2
+PCA_data <- as.matrix(data_norm) %*% matrix_w
+PCA_data <- PCA_data[, 1:M]
+
+# 4.1 Visualization of the data before PCA
+# Use rgl for 3D scatter plot visualization.
+colors <- c("blue", "red", "green")
+shapes <- c(16, 17, 15)
+open3d()
+plot3d(data_raw[, 1], data_raw[, 2], data_raw[, 3], col = colors[target_raw], type = "s", size = 0.5)
+title3d("Samples before PCA", xlab = "Feature 1", ylab = "Feature 2", zlab = "Feature 3")
+legend3d("topright", legend = c("class1", "class2", "class3"), col = colors, pch = shapes)
+
+# 4.2 Visualization of the data after PCA
+# Use ggplot2 for 2D scatter plot visualization after PCA.
+pca_df <- data.frame(PCA_data, Class = as.factor(target_raw))
+colnames(pca_df) <- c("dim_1", "dim_2", "Class")
+
+plot2d <- ggplot(pca_df, aes(x = dim_1, y = dim_2, color = Class, shape = Class)) +
+  geom_point(size = 2, alpha = 0.5) +
+  scale_color_manual(values = colors) +
+  scale_shape_manual(values = shapes) +
+  labs(title = "Samples after PCA", x = "dim_1", y = "dim_2") +
+  theme_minimal()
+print(plot2d)
+```
