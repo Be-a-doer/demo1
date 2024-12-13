@@ -23,6 +23,7 @@ jupyter: julia-1.9
 # Principal Component Analysis(PCA)
 
 ## The Introduction of PCA
+
 When understanding feature extraction and processing, problems involving high-dimensional feature vectors are often prone to **dimensional disasters**. As the dimensionality of the dataset increases, the number of samples required for algorithm learning increases exponentially.
 
 PCA is commonly used for exploring and visualizing high-dimensional data-sets; It can also be used for data compression, data pre-processing, etc. PCA can synthesize high-dimensional variables that may have correlation into linearly independent low dimensional variables, known as principal components.
@@ -37,18 +38,22 @@ In general, an n-dimensional data-set can be reduced to a k-k-dimensional subspa
 
 Assuming we have a 2 dimensional data-set as shown in the following figure, each sample in the data-set is represented by two variables.
 
-<div style="text-align: center; margin: 20px 0;">
-  <img src="images/PCA1.png" alt="PCA1" width="600"/>
-</div>
+::: {style="text-align: center; margin: 20px 0;"}
+<img src="images/PCA1.png" alt="PCA1" width="600"/>
+:::
 
 To reduce the dimensionality of the entire dataset, we must map the points into a line. The two lines in the following figure can be mapped by the dataset. Which line does the sample change the most when mapped to?
 
-<div style="text-align: center; margin: 20px 0;">
-  <img src="images/PCA2.png" alt="PCA2" width="600"/>
-</div>
+::: {style="text-align: center; margin: 20px 0;"}
+<img src="images/PCA2.png" alt="PCA2" width="600"/>
+:::
 
 Obviously, the change in mapping the sample to the black dashed line is much greater than the change in mapping to the red dotted line. In fact, this black dashed line is the first principal component. The second principal component must be orthogonal to the first principal component, as shown in the following figure:
 
-<div style="text-align: center; margin: 20px 0;">
-  <img src="images/PCA3.png" alt="PCA3" width="600"/>
-</div>
+::: {style="text-align: center; margin: 20px 0;"}
+<img src="images/PCA3.png" alt="PCA3" width="600"/>
+:::
+
+So we have found the direction of the two principal components.
+
+## R code for PCA

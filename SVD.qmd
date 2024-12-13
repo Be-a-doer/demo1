@@ -26,31 +26,33 @@ jupyter: julia-1.9
 
 SVD is a fundamental matrix decomposition technique that decomposes a matrix into the product of three matrices which has a wide range of applications, including dimensionality reduction, matrix inversion, and recommendation systems.
 
-Given a matrix **\(A\)**, SVD decomposes it into the following form:
-$$
+Given a matrix **(A)**, SVD decomposes it into the following form: $$
 A = U\Sigma V^T
-$$
-**\(U\)** and **\(V\)** are orthogonal matrices. 
+$$ **(U)** and **(V)** are orthogonal matrices.
+
 <p>$$
   \Sigma \text{ is a diagonal matrix.}
 $$</p>
 
 <ul>
-  <li>The column vectors of \(U\) are called the <strong>left singular vectors</strong>.</li>
-  <li>The column vectors of \(V\) are called the <strong>right singular vectors</strong>.</li>
-  <li>The diagonal elements of \(\Sigma\) are called the <strong>singular values</strong>, which are typically arranged in descending order.</li>
+
+<li>The column vectors of (U) are called the <strong>left singular vectors</strong>.</li>
+
+<li>The column vectors of (V) are called the <strong>right singular vectors</strong>.</li>
+
+<li>The diagonal elements of (\Sigma) are called the <strong>singular values</strong>, which are typically arranged in descending order.</li>
+
 </ul>
 
 In SVD, the singular values represent the significance of the original matrix. Larger singular values correspond to the features represented by the left and right singular vectors that contribute more to the data.
 
 A common application of SVD is in its truncated form. By retaining the larger singular values and their corresponding singular vectors, SVD can achieve dimensionality reduction, extracting the main features of the data.
 
-
 ## The Definition of SVD
 
-<div style="text-align: center; margin: 20px 0;">
-  <img src="images/SVD1.png" alt="SVD1" width="600"/>
-</div>
+::: {style="text-align: center; margin: 20px 0;"}
+<img src="images/SVD1.png" alt="SVD1" width="600"/>
+:::
 
 ## Solving the SVD Matrix
 
@@ -79,7 +81,6 @@ $$
 $$
 A^T A = V\Sigma^T U^T U\Sigma V^T = V\Sigma^T\Sigma V^T
 $$
-
 
 Each eigenvector of $A A^T$ corresponds to the left singular vectors of $A$. Once $U$ is determined, the calculation of singular values becomes straightforward. Since $\Sigma$ is a diagonal matrix whose elements are singular values, we only need to compute each eigenvalue to obtain the singular values.
 
@@ -122,6 +123,3 @@ list(
 
 
 ```
-
-
-
